@@ -1,0 +1,343 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using krbcontext &mdash; krbcontext 0.3.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="krbcontext 0.3.3 documentation" href="index.html"/>
+        <link rel="next" title="API" href="api.html"/>
+        <link rel="prev" title="Welcome to krbcontext’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> krbcontext
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using krbcontext</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lazy-initialization">Lazy initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thread-safe">Thread-safe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basic">Basic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#as-a-regular-user">As a regular user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-service-keytab">Using service Keytab</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#backward-compatibility">Backward Compatibility</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">krbcontext</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Using krbcontext</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/usage.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-krbcontext">
+<h1>Using krbcontext<a class="headerlink" href="#using-krbcontext" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal"><span class="pre">krbcontext</span></code> does the initialization of credential cache (ticket file) in a
+kerberos-related context. It provides a context manager that allows developers
+to put codes inside, which needs a Kerberos environment.</p>
+<p>As a general step before invoking any Kerberos commands and APIs, you should
+configure your Kerberos environment in file <code class="docutils literal"><span class="pre">/etc/krb5.conf</span></code> properly.</p>
+<p>You can use <code class="docutils literal"><span class="pre">krbcontext</span></code> with a regular Kerberos user or a service Keytab
+file. When you work as a regular user, <code class="docutils literal"><span class="pre">krbcontext</span></code> prompts you to enter
+password of your Kerberos account. Whatever in which way, it accepts a set of
+default values and specified values.</p>
+<p>There are several concepts you must know before using <code class="docutils literal"><span class="pre">krbcontext</span></code>, principal
+of user and service, service Keytab file, and credential cache (ticket
+file). Therefore, the arguments passed to <code class="docutils literal"><span class="pre">krbcontext</span></code> are mapped to these
+concepts.</p>
+<div class="section" id="lazy-initialization">
+<h2>Lazy initialization<a class="headerlink" href="#lazy-initialization" title="Permalink to this headline">¶</a></h2>
+<p>Before running client&#8217;s code, <code class="docutils literal"><span class="pre">krbcontext</span></code> checks credential
+<code class="docutils literal"><span class="pre">krbtgt/REALM&#64;REALM</span></code> in default or specified credential cache to see if it is
+necessary to be initialized.</p>
+</div>
+<div class="section" id="thread-safe">
+<h2>Thread-safe<a class="headerlink" href="#thread-safe" title="Permalink to this headline">¶</a></h2>
+<p>If you want krbcontext to initialize credential in Kerberos standard
+credenticial cache, or pass a file name to argument <code class="docutils literal"><span class="pre">ccache_file</span></code> explicitly,
+krbcontext is thread-safe. However, it is still suggestion that you pass
+credentials cache file name for each thread individually.</p>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">krbcontext</span></code> depends on <a class="reference external" href="https://fedorahosted.org/python-krbV/">python-krbV</a>, that is a Python extension module for
+Kerberos 5.</p>
+<p>If you install <code class="docutils literal"><span class="pre">krbcontext</span></code> using RPM, dependency will be resolved
+automatically. If easy_install or pip is used, it is necessary to install
+<code class="docutils literal"><span class="pre">python-krbV</span></code> manually from software repository. For example,</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">krbV</span>
+</pre></div>
+</div>
+<p>As of writing this document, <code class="docutils literal"><span class="pre">python-krbV</span></code> is only available as RPM package
+in Fedora, CentOS, and probably RHEL. If you are using non-RPM distributions,
+feel free to build it for yourself. Don&#8217;t be afraid, it should be easy
+enough. Please refer to the project&#8217;s documentation, how to build it is beyond
+the scope of this document.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Using <a class="reference external" href="https://pypi.python.org/pypi/virtualenv/">virtual environment</a></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">krbV</span>
+<span class="n">virtualenv</span> <span class="o">--</span><span class="n">system</span><span class="o">-</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span> <span class="n">myproject</span>
+<span class="o">.</span> <span class="n">myproject</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">krbcontext</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="arguments">
+<h3>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>using_keytab</dt>
+<dd>Specify whether using the service Keytab to initialize the credential cache.
+Default is False.</dd>
+<dt>kwargs</dt>
+<dd><p class="first">Specify necessary arguments for initializing credential cache. Acceptable
+arguments include:</p>
+<ul class="last simple">
+<li><code class="docutils literal"><span class="pre">principal</span></code>: user principal or service principal</li>
+<li><code class="docutils literal"><span class="pre">keytab_file</span></code>: absolute path of Keytab file</li>
+<li><code class="docutils literal"><span class="pre">ccache_file</span></code>: absolute path of credential cache</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="basic">
+<h3>Basic<a class="headerlink" href="#basic" title="Permalink to this headline">¶</a></h3>
+<p>krbcontext can be used as a normal context manager simply.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">():</span>
+    <span class="c1"># your code here</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="as-a-regular-user">
+<h3>As a regular user<a class="headerlink" href="#as-a-regular-user" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>This is the most simplest way. It uses default values. It gets current effective
+user name rather than login name, and initialize the default credential cache,
+<code class="docutils literal"><span class="pre">/tmp/krb5cc_xxx</span></code>, where xxx is the current user ID returned by <code class="docutils literal"><span class="pre">os.getuid</span></code> method.</p>
+<p>Specifying custom values</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">(</span><span class="n">principal</span><span class="o">=</span><span class="s1">&#39;qcxhome@EXAMPLE.COM&#39;</span><span class="p">,</span>
+                <span class="n">ccache_file</span><span class="o">=</span><span class="s1">&#39;/tmp/krb5cc_my&#39;</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">with</span> <span class="n">krbContext</span><span class="p">(</span><span class="n">principal</span><span class="o">=</span><span class="s1">&#39;qcxhome&#39;</span><span class="p">,</span>
+                <span class="n">ccache_file</span><span class="o">=</span><span class="s1">&#39;/tmp/krb5cc_my&#39;</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-service-keytab">
+<h3>Using service Keytab<a class="headerlink" href="#using-service-keytab" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">(</span><span class="n">using_keytab</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">principal</span><span class="o">=</span><span class="s1">&#39;HTTP/localhost@EXAMPLE.COM&#39;</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>You can also use default values here except the using_keytab and principal.
+The default Keytab locates <code class="docutils literal"><span class="pre">/etc/krb5.keytab</span></code>, and default credential cache
+locates <code class="docutils literal"><span class="pre">/tmp/krb5cc_xxx</span></code>, like above.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">(</span><span class="n">using_keytab</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">principal</span><span class="o">=</span><span class="s1">&#39;HTTP/localhost@EXAMPLE.COM&#39;</span><span class="p">,</span>
+                <span class="n">keytab_file</span><span class="o">=</span><span class="s1">&#39;/etc/httpd/conf/httpd.keytab&#39;</span><span class="p">,</span>
+                <span class="n">ccache_file</span><span class="o">=</span><span class="s1">&#39;/tmp/krb5cc_pid_appname&#39;</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>If you have another Keytab that is be elsewhere and a credential cache for
+special purpose, you may pass the <code class="docutils literal"><span class="pre">keytab_file</span></code> and <code class="docutils literal"><span class="pre">ccache_file</span></code>.</p>
+</div>
+</div>
+<div class="section" id="backward-compatibility">
+<h2>Backward Compatibility<a class="headerlink" href="#backward-compatibility" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">krbcontext</span></code> is deprecated and will be removed in future version. New code
+should use <code class="docutils literal"><span class="pre">krbContext</span></code> instead.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api.html" class="btn btn-neutral float-right" title="API" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to krbcontext’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Chenxiong Qi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
