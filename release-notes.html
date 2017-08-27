@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
@@ -9,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; krbcontext 0.6 documentation</title>
+  <title>Release Notes &mdash; krbcontext 0.6 documentation</title>
   
 
   
@@ -32,9 +31,10 @@
 
   
         <link rel="index" title="Index"
-              href="#"/>
+              href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="krbcontext 0.6 documentation" href="index.html"/> 
+    <link rel="top" title="krbcontext 0.6 documentation" href="index.html"/>
+        <link rel="prev" title="API" href="api.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -83,10 +83,16 @@
           
             
             
-                <ul>
+                <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Using krbcontext</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.6 (2017-08-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">0.5 (2017-08-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">0.4 (2017-08-26)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#legacy">0.3.3 (legacy)</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -109,7 +115,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -117,9 +123,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li></li>
+    <li>Release Notes</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+            <a href="_sources/release-notes.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -129,63 +137,43 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- <a href="#_"><strong>_</strong></a>
- | <a href="#C"><strong>C</strong></a>
- | <a href="#I"><strong>I</strong></a>
- | <a href="#K"><strong>K</strong></a>
- 
+  <div class="section" id="release-notes">
+<h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>0.6 (2017-08-27)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>This is a quick and small release after version <code class="docutils literal"><span class="pre">0.5</span></code> by fixing a bug of
+reading package distribution metadata.</p>
 </div>
-<h2 id="_">_</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#krbcontext.context.krbContext.__enter__">__enter__() (krbcontext.context.krbContext method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#krbcontext.context.krbContext.__exit__">__exit__() (krbcontext.context.krbContext method)</a>
-</li>
-      <li><a href="api.html#krbcontext.context.krbContext._prepare_context">_prepare_context() (krbcontext.context.krbContext method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="C">C</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#krbcontext.context.krbContext.clean_options">clean_options() (krbcontext.context.krbContext method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="I">I</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#krbcontext.context.krbContext.init_with_keytab">init_with_keytab() (krbcontext.context.krbContext method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#krbcontext.context.krbContext.init_with_password">init_with_password() (krbcontext.context.krbContext method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="K">K</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#krbcontext.context.krbContext">krbContext (class in krbcontext.context)</a>
-</li>
-  </ul></td>
-</tr></table>
-
+<div class="section" id="id2">
+<h2>0.5 (2017-08-27)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Add new target <code class="docutils literal"><span class="pre">distcheck</span></code> into <code class="docutils literal"><span class="pre">Makefile</span></code>. This is used for checking
+whether there is any problems that would block making a new release.</p>
+<p>Add script to make it super easy to prepare a new release, just run <code class="docutils literal"><span class="pre">make</span>
+<span class="pre">release</span></code> and all artifacts will be created properly and placed in a dedicated
+directory named <code class="docutils literal"><span class="pre">release</span></code> at the root directory of project.</p>
+</div>
+<div class="section" id="id3">
+<h2>0.4 (2017-08-26)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Migrate to <code class="docutils literal"><span class="pre">python-gssapi</span></code>. <code class="docutils literal"><span class="pre">python-krbV</span></code> is no longer used.</p>
+<p><code class="docutils literal"><span class="pre">krbcontext</span></code> is compatible with Python 3.</p>
+</div>
+<div class="section" id="legacy">
+<h2>0.3.3 (legacy)<a class="headerlink" href="#legacy" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">0.3.3</span></code> is a legacy version, any new programs should use versions <code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">0.3.3</span></code>.</p>
+</div>
+</div>
 
 
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="api.html" class="btn btn-neutral" title="API" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

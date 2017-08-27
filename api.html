@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API &mdash; krbcontext 0.3.3 documentation</title>
+  <title>API &mdash; krbcontext 0.6 documentation</title>
   
 
   
@@ -30,7 +30,11 @@
   
 
   
-    <link rel="top" title="krbcontext 0.3.3 documentation" href="index.html"/>
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="krbcontext 0.6 documentation" href="index.html"/>
+        <link rel="next" title="Release Notes" href="release-notes.html"/>
         <link rel="prev" title="Using krbcontext" href="usage.html"/> 
 
   
@@ -59,7 +63,7 @@
             
             
               <div class="version">
-                0.3.3
+                0.6
               </div>
             
           
@@ -84,9 +88,9 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Using krbcontext</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#krbcontext-context">krbcontext.context</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#krbcontext-utils">krbcontext.utils</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a></li>
 </ul>
 
             
@@ -121,7 +125,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/api.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -137,267 +141,104 @@
 <h2>krbcontext.context<a class="headerlink" href="#krbcontext-context" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="krbcontext.context.krbContext">
-<em class="property">class </em><code class="descclassname">krbcontext.context.</code><code class="descname">krbContext</code><span class="sig-paren">(</span><em>using_keytab=None</em>, <em>principal=None</em>, <em>keytab_file=None</em>, <em>ccache_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">krbcontext.context.</code><code class="descname">krbContext</code><span class="sig-paren">(</span><em>using_keytab=False</em>, <em>principal=None</em>, <em>keytab_file=None</em>, <em>ccache_file=None</em>, <em>password=None</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext" title="Permalink to this definition">¶</a></dt>
 <dd><p>A context manager for Kerberos-related actions</p>
+<p>krbContext is able to initialize credential cache automatically when the
+cache is not valid.</p>
+<p>krbContext aims to use Kerberos environment variable <code class="docutils literal"><span class="pre">KRB5CCNAME</span></code> to
+point to a given local credential cache, which will be used by Kerberos
+library, whatever the krb5 API or GSSAPI, to store ticket.</p>
+<p>If default credential cache is used, it is unnecessary to point out to the
+default by that variable, Kerberos library is able to handle that.</p>
+<p>After credential cache is initialized, original value of <code class="docutils literal"><span class="pre">KRB5CCNAME</span></code>, if
+have, must be restored. Otherwise, <code class="docutils literal"><span class="pre">KRB5CCNAME</span></code> must not be present in
+program&#8217;s environment variables.</p>
+<p>krbContext can work with <code class="docutils literal"><span class="pre">with</span></code> statement to simplify your code.</p>
 <dl class="method">
 <dt id="krbcontext.context.krbContext.__enter__">
 <code class="descname">__enter__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext.__enter__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize credential cache if necessary before enter krbcontext</p>
+<dd><p>Initialize ccache when necessary before executing user code</p>
+<p>Lock is acquired as well before user code executes.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="krbcontext.context.krbContext.__exit__">
 <code class="descname">__exit__</code><span class="sig-paren">(</span><em>exc_type</em>, <em>exc_value</em>, <em>traceback</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext.__exit__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clean krbcontext</p>
+<dd><p>Clean context</p>
+<p>If ccache is reinitialized, original value of <code class="docutils literal"><span class="pre">KRB5CCNAME</span></code> will be
+restored correctly, if there was. And, lock gets released as well.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="krbcontext.context.krbContext.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>using_keytab=None</em>, <em>principal=None</em>, <em>keytab_file=None</em>, <em>ccache_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize context</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>using_keytab</strong> (<em>bool</em>) &#8211; indicate whether to initialize credential
-cache from a keytab.</li>
-<li><strong>principal</strong> (<em>str</em>) &#8211; Kerberos principal to get TGT from KDC. To
-initialize using a regular user Kerberos account, a principal would be
-<a class="reference external" href="mailto:name&#37;&#52;&#48;EXAMPLE&#46;COM">name<span>&#64;</span>EXAMPLE<span>&#46;</span>COM</a>. To initialize using a keytab, a principal would be a
-service principal with format <a class="reference external" href="mailto:service_name/hostname&#37;&#52;&#48;EXAMPLE&#46;COM">service_name/hostname<span>&#64;</span>EXAMPLE<span>&#46;</span>COM</a>.</li>
-<li><strong>keytab_file</strong> (<em>str</em>) &#8211; file name of a keytab file, either absolute or
-relative is okay.</li>
-<li><strong>ccache_file</strong> (<em>str</em>) &#8211; file name of a credential cache to initialize.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<dt id="krbcontext.context.krbContext._prepare_context">
+<code class="descname">_prepare_context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext._prepare_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare context</p>
+<p>Initialize credential cache with keytab or password according to
+<code class="docutils literal"><span class="pre">using_keytab</span></code> parameter. Then, <code class="docutils literal"><span class="pre">KRB5CCNAME</span></code> is set properly so
+that Kerberos library called in current context is able to get
+credential from correct cache.</p>
+<p>Internal use only.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="krbcontext.context.krbContext.__weakref__">
-<code class="descname">__weakref__</code><a class="headerlink" href="#krbcontext.context.krbContext.__weakref__" title="Permalink to this definition">¶</a></dt>
-<dd><p>list of weak references to the object (if defined)</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="krbcontext.context.krbContext.initialized">
-<code class="descname">initialized</code><a class="headerlink" href="#krbcontext.context.krbContext.initialized" title="Permalink to this definition">¶</a></dt>
-<dd><p>Indicate whether credential cache has been initialized</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="exception">
-<dt id="krbcontext.context.KRB5InitError">
-<em class="property">exception </em><code class="descclassname">krbcontext.context.</code><code class="descname">KRB5InitError</code><a class="headerlink" href="#krbcontext.context.KRB5InitError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Error of credential cache initialization</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="krbcontext.context.init_ccache_as_regular_user">
-<code class="descclassname">krbcontext.context.</code><code class="descname">init_ccache_as_regular_user</code><span class="sig-paren">(</span><em>principal</em>, <em>ccache</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.init_ccache_as_regular_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize credential cache as a regular user</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>principal</strong> (<em>krbV.Principal</em>) &#8211; a user&#8217;s Kerberos principal.</li>
-<li><strong>ccache</strong> (<em>krbV.CCache</em>) &#8211; the credential cache to be initialized.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">filename of newly initialized credential cache</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="krbcontext.context.init_ccache_with_keytab">
-<code class="descclassname">krbcontext.context.</code><code class="descname">init_ccache_with_keytab</code><span class="sig-paren">(</span><em>principal</em>, <em>keytab</em>, <em>ccache</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.init_ccache_with_keytab" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize credential cache using keytab file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>principal</strong> (<em>krbV.Principal</em>) &#8211; a service&#8217; principal.</li>
-<li><strong>keytab</strong> (<em>krbV.Keytab</em>) &#8211; the keytab file containing service&#8217; principal.</li>
-<li><strong>ccache</strong> (<em>krbV.CCache</em>) &#8211; the credential cache to be initialized.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">filename of newly initialized credential cache.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="krbcontext.context.get_default_ccache">
-<code class="descclassname">krbcontext.context.</code><code class="descname">get_default_ccache</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.get_default_ccache" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="krbcontext.context.is_initialize_ccache_necessary">
-<code class="descclassname">krbcontext.context.</code><code class="descname">is_initialize_ccache_necessary</code><span class="sig-paren">(</span><em>context</em>, <em>ccache</em>, <em>principal</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.is_initialize_ccache_necessary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Judge whether initializing credential cache is necessary</p>
-<p>In following three cases, it is necessary to initialize credential cache.</p>
-<ul class="simple">
-<li>Credential cache file does not exist.</li>
-<li>Credential cache file has bad format.</li>
-<li>TGT expires.</li>
-</ul>
-<p>When TGT expires, attemption that getting credentials will return error
-<code class="docutils literal"><span class="pre">Match</span> <span class="pre">credentials</span> <span class="pre">not</span> <span class="pre">found</span></code>, its error code is KRB5_CC_NOTFOUND.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>context</strong> (<em>krbV.Context</em>) &#8211; Kerberos context.</li>
-<li><strong>ccache</strong> (<em>krbV.CCache</em>) &#8211; the credential cache from which to determine if
-it is necessary to initialize.</li>
-<li><strong>principal</strong> (<em>krbV.Principal</em>) &#8211; the principal name that is being used for
-getting ticket from <code class="docutils literal"><span class="pre">ccache</span></code>.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a boolean that indicates if it is necessary to initialize a new
-credential cache.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="krbcontext.context.clean_context_options">
-<code class="descclassname">krbcontext.context.</code><code class="descname">clean_context_options</code><span class="sig-paren">(</span><em>context</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.clean_context_options" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="krbcontext.context.krbContext.clean_options">
+<code class="descname">clean_options</code><span class="sig-paren">(</span><em>using_keytab=False</em>, <em>principal=None</em>, <em>keytab_file=None</em>, <em>ccache_file=None</em>, <em>password=None</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext.clean_options" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clean argument to related object</p>
-<p>In the case of using Key table, principal is required. keytab_file is
-optional, and default key table file <code class="docutils literal"><span class="pre">/etc/krb5.keytab</span></code> is used if
-keytab_file is not provided.</p>
-<p>In the case of initing as a regular user, principal is optional, and
-current user&#8217;s effective name is used if principal is not provided.</p>
-<p>By default, initialize credentials cache for regular user.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>context</strong> (<em>krbV.Context</em>) &#8211; Kerberos context.</li>
-<li><strong>options</strong> &#8211; keyword arguments that contains values passed from
-caller. Each one will be converted to corresponding krbV objects. Refer
-to <code class="docutils literal"><span class="pre">krbContext.__init__</span></code> to see each argument.</li>
+<li><strong>using_keytab</strong> (<em>bool</em>) &#8211; refer to <code class="docutils literal"><span class="pre">krbContext.__init__</span></code>.</li>
+<li><strong>principal</strong> (<em>str</em>) &#8211; refer to <code class="docutils literal"><span class="pre">krbContext.__init__</span></code>.</li>
+<li><strong>keytab_file</strong> (<em>str</em>) &#8211; refer to <code class="docutils literal"><span class="pre">krbContext.__init__</span></code>.</li>
+<li><strong>ccache_file</strong> (<em>str</em>) &#8211; refer to <code class="docutils literal"><span class="pre">krbContext.__init__</span></code>.</li>
+<li><strong>password</strong> (<em>str</em>) &#8211; refer to <code class="docutils literal"><span class="pre">krbContext.__init__</span></code>.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a mapping containing each converted krbV objects. It could
-contains keys principal, ccache, keytab, and using_keytab.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a mapping containing cleaned names and values, which are used
+internally.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">dict</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>ValueError</strong> &#8211; principal is missing or given keytab file does not
+exist, when initialize from a keytab.</p>
 </td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
-<dl class="function">
-<dt id="krbcontext.context.init_ccache_if_necessary">
-<code class="descclassname">krbcontext.context.</code><code class="descname">init_ccache_if_necessary</code><span class="sig-paren">(</span><em>context</em>, <em>using_keytab</em>, <em>principal</em>, <em>ccache</em>, <em>keytab=None</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.init_ccache_if_necessary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize credential cache if necessary</p>
-<p>The original credential cache is saved and returned for recovery in the
-final step. And the specified one is assigned to <code class="docutils literal"><span class="pre">KRB5CCNAME</span></code> in current
-process.</p>
+<dl class="method">
+<dt id="krbcontext.context.krbContext.init_with_keytab">
+<code class="descname">init_with_keytab</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext.init_with_keytab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize credential cache with keytab</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="krbcontext.context.krbContext.init_with_password">
+<code class="descname">init_with_password</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext.init_with_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize credential cache with password</p>
+<p><strong>Causion:</strong> once you enter password from command line, or pass it to
+API directly, the given password is not encrypted always. Although
+getting credential with password works, from security point of view, it
+is strongly recommended <strong>NOT</strong> use it in any formal production
+environment. If you need to initialize credential in an application to
+application Kerberos authentication context, keytab has to be used.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>context</strong> (<em>krbV.Context</em>) &#8211; Kerberos context.</li>
-<li><strong>using_keytab</strong> (<em>bool</em>) &#8211; whether to initialize credential cache using a
-keytab. If not, it means to initialize use a regular user&#8217;s principal.</li>
-<li><strong>principal</strong> (<em>krbV.Principal</em>) &#8211; the principal used to initialize credential
-cache.</li>
-<li><strong>ccache</strong> (<em>krbV.CCache</em>) &#8211; the credential cache to initialize.</li>
-<li><strong>keytab</strong> (<em>krbV.Keytab</em>) &#8211; if using keytab to initialize, this represents
-the keytab in the local system. If do not initialize using a keytab,
-this argument can be omitted.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>IOError</strong> &#8211; if initialize a credential cache using a regular user&#8217;s
-principal, and the script that needs a well-initialized Kerberos context
-does not run in a terminal, <code class="docutils literal"><span class="pre">IOError</span></code> will be raised. That is because
-it is not possible for a human to enter his or her password generally.</p>
-</td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>IOError</strong> &#8211; when trying to prompt to input password from command
+line but no attry is available.</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
-</div>
-<div class="section" id="krbcontext-utils">
-<h2>krbcontext.utils<a class="headerlink" href="#krbcontext-utils" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="krbcontext.utils.CredentialTime">
-<em class="property">class </em><code class="descclassname">krbcontext.utils.</code><code class="descname">CredentialTime</code><span class="sig-paren">(</span><em>authtime</em>, <em>starttime</em>, <em>endtime</em>, <em>renew_till</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.utils.CredentialTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Used internally holding credential time got from ccache</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="krbcontext.utils.get_login">
-<code class="descclassname">krbcontext.utils.</code><code class="descname">get_login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.utils.get_login" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get current effective user name</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="krbcontext.utils.build_tgt_ticket">
-<code class="descclassname">krbcontext.utils.</code><code class="descname">build_tgt_ticket</code><span class="sig-paren">(</span><em>principal</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.utils.build_tgt_ticket" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="krbcontext.utils.get_tgt_time">
-<code class="descclassname">krbcontext.utils.</code><code class="descname">get_tgt_time</code><span class="sig-paren">(</span><em>context</em>, <em>ccache</em>, <em>principal</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.utils.get_tgt_time" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get specified TGT&#8217;s credential time</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>context</strong> (<em>krbV.Context</em>) &#8211; Kerberos context object.</li>
-<li><strong>ccache</strong> (<em>krbV.CCache</em>) &#8211; the CCache object that is associated with context.</li>
-<li><strong>principal</strong> (<em>krbV.Principal</em>) &#8211; the principal that is being used for
-getting ticket.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">instance of CredentialTime holding credential&#8217;s <code class="docutils literal"><span class="pre">authtime</span></code>,
-<code class="docutils literal"><span class="pre">starttime</span></code>, <code class="docutils literal"><span class="pre">endtime</span></code>, and <code class="docutils literal"><span class="pre">renew_till</span></code>.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#krbcontext.utils.CredentialTime" title="krbcontext.utils.CredentialTime">CredentialTime</a></p>
-</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 </div>
@@ -410,6 +251,8 @@ getting ticket.</li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="release-notes.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
       
         <a href="usage.html" class="btn btn-neutral" title="Using krbcontext" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
@@ -420,7 +263,7 @@ getting ticket.</li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Chenxiong Qi.
+        &copy; Copyright 2017, Chenxiong Qi.
 
     </p>
   </div>
@@ -442,7 +285,7 @@ getting ticket.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.3.3',
+            VERSION:'0.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
