@@ -87,9 +87,10 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Using krbcontext</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.6 (2017-08-27)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.5 (2017-08-27)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">0.4 (2017-08-26)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.7 (2017-08-30)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">0.6 (2017-08-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">0.5 (2017-08-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">0.4 (2017-08-26)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#legacy">0.3.3 (legacy)</a></li>
 </ul>
 </li>
@@ -140,20 +141,27 @@
   <div class="section" id="release-notes">
 <h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2>0.6 (2017-08-27)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>0.7 (2017-08-30)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Enhance scripts for making new release, publishing packages to PyPI, and
+building RPMs in Fedora Copr.</p>
+<p>Fix a bug in <code class="docutils literal"><span class="pre">init_with_keytab</span></code> that is <code class="docutils literal"><span class="pre">client_keytab</span></code> is not used
+correctly. And also fix tests to use <code class="docutils literal"><span class="pre">assert_has_calls</span></code> correctly.</p>
+</div>
+<div class="section" id="id2">
+<h2>0.6 (2017-08-27)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>This is a quick and small release after version <code class="docutils literal"><span class="pre">0.5</span></code> by fixing a bug of
 reading package distribution metadata.</p>
 </div>
-<div class="section" id="id2">
-<h2>0.5 (2017-08-27)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>0.5 (2017-08-27)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>Add new target <code class="docutils literal"><span class="pre">distcheck</span></code> into <code class="docutils literal"><span class="pre">Makefile</span></code>. This is used for checking
 whether there is any problems that would block making a new release.</p>
 <p>Add script to make it super easy to prepare a new release, just run <code class="docutils literal"><span class="pre">make</span>
 <span class="pre">release</span></code> and all artifacts will be created properly and placed in a dedicated
 directory named <code class="docutils literal"><span class="pre">release</span></code> at the root directory of project.</p>
 </div>
-<div class="section" id="id3">
-<h2>0.4 (2017-08-26)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>0.4 (2017-08-26)<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>Migrate to <code class="docutils literal"><span class="pre">python-gssapi</span></code>. <code class="docutils literal"><span class="pre">python-krbV</span></code> is no longer used.</p>
 <p><code class="docutils literal"><span class="pre">krbcontext</span></code> is compatible with Python 3.</p>
 </div>
