@@ -8,48 +8,45 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API &mdash; krbcontext 0.7 documentation</title>
+  <title>API &mdash; krbcontext 0.10 documentation</title>
   
 
   
   
+  
+  
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="krbcontext 0.7 documentation" href="index.html"/>
-        <link rel="next" title="Release Notes" href="release-notes.html"/>
-        <link rel="prev" title="Using krbcontext" href="usage.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release Notes" href="release-notes.html" />
+    <link rel="prev" title="Using krbcontext" href="usage.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -63,7 +60,7 @@
             
             
               <div class="version">
-                0.7
+                0.10
               </div>
             
           
@@ -84,7 +81,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Using krbcontext</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#krbcontext-context">krbcontext.context</a></li>
@@ -102,34 +102,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">krbcontext</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">krbcontext</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>API</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>API</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -145,15 +165,15 @@
 <dd><p>A context manager for Kerberos-related actions</p>
 <p>krbContext is able to initialize credential cache automatically when the
 cache is not valid.</p>
-<p>krbContext aims to use Kerberos environment variable <code class="docutils literal"><span class="pre">KRB5CCNAME</span></code> to
+<p>krbContext aims to use Kerberos environment variable <code class="docutils literal notranslate"><span class="pre">KRB5CCNAME</span></code> to
 point to a given local credential cache, which will be used by Kerberos
 library, whatever the krb5 API or GSSAPI, to store ticket.</p>
 <p>If default credential cache is used, it is unnecessary to point out to the
 default by that variable, Kerberos library is able to handle that.</p>
-<p>After credential cache is initialized, original value of <code class="docutils literal"><span class="pre">KRB5CCNAME</span></code>, if
-have, must be restored. Otherwise, <code class="docutils literal"><span class="pre">KRB5CCNAME</span></code> must not be present in
-program&#8217;s environment variables.</p>
-<p>krbContext can work with <code class="docutils literal"><span class="pre">with</span></code> statement to simplify your code.</p>
+<p>After credential cache is initialized, original value of <code class="docutils literal notranslate"><span class="pre">KRB5CCNAME</span></code>, if
+have, must be restored. Otherwise, <code class="docutils literal notranslate"><span class="pre">KRB5CCNAME</span></code> must not be present in
+program’s environment variables.</p>
+<p>krbContext can work with <code class="docutils literal notranslate"><span class="pre">with</span></code> statement to simplify your code.</p>
 <dl class="method">
 <dt id="krbcontext.context.krbContext.__enter__">
 <code class="descname">__enter__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext.__enter__" title="Permalink to this definition">¶</a></dt>
@@ -165,7 +185,7 @@ program&#8217;s environment variables.</p>
 <dt id="krbcontext.context.krbContext.__exit__">
 <code class="descname">__exit__</code><span class="sig-paren">(</span><em>exc_type</em>, <em>exc_value</em>, <em>traceback</em><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext.__exit__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clean context</p>
-<p>If ccache is reinitialized, original value of <code class="docutils literal"><span class="pre">KRB5CCNAME</span></code> will be
+<p>If ccache is reinitialized, original value of <code class="docutils literal notranslate"><span class="pre">KRB5CCNAME</span></code> will be
 restored correctly, if there was. And, lock gets released as well.</p>
 </dd></dl>
 
@@ -174,7 +194,7 @@ restored correctly, if there was. And, lock gets released as well.</p>
 <code class="descname">_prepare_context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#krbcontext.context.krbContext._prepare_context" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prepare context</p>
 <p>Initialize credential cache with keytab or password according to
-<code class="docutils literal"><span class="pre">using_keytab</span></code> parameter. Then, <code class="docutils literal"><span class="pre">KRB5CCNAME</span></code> is set properly so
+<code class="docutils literal notranslate"><span class="pre">using_keytab</span></code> parameter. Then, <code class="docutils literal notranslate"><span class="pre">KRB5CCNAME</span></code> is set properly so
 that Kerberos library called in current context is able to get
 credential from correct cache.</p>
 <p>Internal use only.</p>
@@ -189,11 +209,11 @@ credential from correct cache.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>using_keytab</strong> (<em>bool</em>) &#8211; refer to <code class="docutils literal"><span class="pre">krbContext.__init__</span></code>.</li>
-<li><strong>principal</strong> (<em>str</em>) &#8211; refer to <code class="docutils literal"><span class="pre">krbContext.__init__</span></code>.</li>
-<li><strong>keytab_file</strong> (<em>str</em>) &#8211; refer to <code class="docutils literal"><span class="pre">krbContext.__init__</span></code>.</li>
-<li><strong>ccache_file</strong> (<em>str</em>) &#8211; refer to <code class="docutils literal"><span class="pre">krbContext.__init__</span></code>.</li>
-<li><strong>password</strong> (<em>str</em>) &#8211; refer to <code class="docutils literal"><span class="pre">krbContext.__init__</span></code>.</li>
+<li><strong>using_keytab</strong> (<em>bool</em>) – refer to <code class="docutils literal notranslate"><span class="pre">krbContext.__init__</span></code>.</li>
+<li><strong>principal</strong> (<em>str</em>) – refer to <code class="docutils literal notranslate"><span class="pre">krbContext.__init__</span></code>.</li>
+<li><strong>keytab_file</strong> (<em>str</em>) – refer to <code class="docutils literal notranslate"><span class="pre">krbContext.__init__</span></code>.</li>
+<li><strong>ccache_file</strong> (<em>str</em>) – refer to <code class="docutils literal notranslate"><span class="pre">krbContext.__init__</span></code>.</li>
+<li><strong>password</strong> (<em>str</em>) – refer to <code class="docutils literal notranslate"><span class="pre">krbContext.__init__</span></code>.</li>
 </ul>
 </td>
 </tr>
@@ -204,7 +224,7 @@ internally.</p>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">dict</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>ValueError</strong> &#8211; principal is missing or given keytab file does not
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>ValueError</strong> – principal is missing or given keytab file does not
 exist, when initialize from a keytab.</p>
 </td>
 </tr>
@@ -232,7 +252,7 @@ application Kerberos authentication context, keytab has to be used.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>IOError</strong> &#8211; when trying to prompt to input password from command
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>IOError</strong> – when trying to prompt to input password from command
 line but no attry is available.</td>
 </tr>
 </tbody>
@@ -246,15 +266,16 @@ line but no attry is available.</td>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="release-notes.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="release-notes.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="usage.html" class="btn btn-neutral" title="Using krbcontext" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral float-left" title="Using krbcontext" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -263,11 +284,11 @@ line but no attry is available.</td>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Chenxiong Qi.
+        &copy; Copyright 2017, Chenxiong Qi
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -280,35 +301,15 @@ line but no attry is available.</td>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'0.7',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

@@ -8,48 +8,45 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Using krbcontext &mdash; krbcontext 0.7 documentation</title>
+  <title>Using krbcontext &mdash; krbcontext 0.10 documentation</title>
   
 
   
   
+  
+  
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="krbcontext 0.7 documentation" href="index.html"/>
-        <link rel="next" title="API" href="api.html"/>
-        <link rel="prev" title="Welcome to krbcontext’s documentation!" href="index.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="api.html" />
+    <link rel="prev" title="Welcome to krbcontext’s documentation!" href="index.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -63,7 +60,7 @@
             
             
               <div class="version">
-                0.7
+                0.10
               </div>
             
           
@@ -84,7 +81,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Using krbcontext</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#lazy-initialization">Lazy Initialization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#thread-safe">Thread-safe</a></li>
@@ -112,34 +112,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">krbcontext</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">krbcontext</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Using krbcontext</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Using krbcontext</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -147,33 +167,33 @@
             
   <div class="section" id="using-krbcontext">
 <h1>Using krbcontext<a class="headerlink" href="#using-krbcontext" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal"><span class="pre">krbcontext</span></code> provides a Kerberos context that you can put code inside, which
+<p><code class="docutils literal notranslate"><span class="pre">krbcontext</span></code> provides a Kerberos context that you can put code inside, which
 requires a valid ticket in credential cache.</p>
-<p><code class="docutils literal"><span class="pre">krbcontext</span></code> is able to initialize credential cache automatically on behalf
+<p><code class="docutils literal notranslate"><span class="pre">krbcontext</span></code> is able to initialize credential cache automatically on behalf
 of you according to the options you specify. It can initialize with keytab or a
-regular user&#8217;s Kerberos name and password.</p>
-<p>You can use <code class="docutils literal"><span class="pre">krbcontext</span></code> as a context manager with <code class="docutils literal"><span class="pre">with</span></code> statement, or
+regular user’s Kerberos name and password.</p>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">krbcontext</span></code> as a context manager with <code class="docutils literal notranslate"><span class="pre">with</span></code> statement, or
 call API directly to check credential cache and even initialize by yourself.</p>
 <div class="section" id="lazy-initialization">
 <h2>Lazy Initialization<a class="headerlink" href="#lazy-initialization" title="Permalink to this headline">¶</a></h2>
-<p>Current version of <code class="docutils literal"><span class="pre">krbcontext</span></code> is able to detect whether specified cache is
+<p>Current version of <code class="docutils literal notranslate"><span class="pre">krbcontext</span></code> is able to detect whether specified cache is
 a valid credential cache file and contains valid and non-expired ticket. So,
 only initializes credential cache when it is necessary.</p>
 </div>
 <div class="section" id="thread-safe">
 <h2>Thread-safe<a class="headerlink" href="#thread-safe" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">krbcontext</span></code> manages its own threading lock, and it is acquired when entering
+<p><code class="docutils literal notranslate"><span class="pre">krbcontext</span></code> manages its own threading lock, and it is acquired when entering
 context and gets released when exit. It is recommended that you just put the
 necessary code, which requires a valid Kerberos ticket, inside context.</p>
 </div>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">krbcontext</span></code> requires <a class="reference external" href="https://github.com/pythongssapi/python-gssapi">python-gssapi</a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">krbcontext</span></code> requires <a class="reference external" href="https://github.com/pythongssapi/python-gssapi">python-gssapi</a>.</p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Using <a class="reference external" href="https://pypi.python.org/pypi/virtualenv/">virtual environment</a></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">virtualenv</span> <span class="n">myproject</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">virtualenv</span> <span class="n">myproject</span>
 <span class="o">.</span> <span class="n">myproject</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">krbcontext</span>
 </pre></div>
@@ -185,7 +205,7 @@ necessary code, which requires a valid Kerberos ticket, inside context.</p>
 <div class="section" id="basic">
 <h3>Basic<a class="headerlink" href="#basic" title="Permalink to this headline">¶</a></h3>
 <p>krbcontext can be used as a normal context manager simply.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">():</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">():</span>
     <span class="c1"># your code here</span>
     <span class="k">pass</span>
 </pre></div>
@@ -193,14 +213,14 @@ necessary code, which requires a valid Kerberos ticket, inside context.</p>
 </div>
 <div class="section" id="as-a-regular-user">
 <h3>As a regular user<a class="headerlink" href="#as-a-regular-user" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">():</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">():</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
 <p>This is the most simplest way, which uses default values. It gets current
 effective user name, and get ticket and store it into default credential cache.</p>
 <p>You can specify specific prinicpal or cache file explicityly.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">(</span><span class="n">principal</span><span class="o">=</span><span class="s1">&#39;qcxhome@EXAMPLE.COM&#39;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">(</span><span class="n">principal</span><span class="o">=</span><span class="s1">&#39;qcxhome@EXAMPLE.COM&#39;</span><span class="p">,</span>
                 <span class="n">ccache_file</span><span class="o">=</span><span class="s1">&#39;/tmp/krb5cc_my&#39;</span><span class="p">):</span>
     <span class="k">pass</span>
 
@@ -212,44 +232,45 @@ effective user name, and get ticket and store it into default credential cache.<
 </div>
 <div class="section" id="using-service-keytab">
 <h3>Using service Keytab<a class="headerlink" href="#using-service-keytab" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">(</span><span class="n">using_keytab</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">(</span><span class="n">using_keytab</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">principal</span><span class="o">=</span><span class="s1">&#39;HTTP/localhost@EXAMPLE.COM&#39;</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">principal</span></code> must be specified when initialize with keytab. In this example,
-<code class="docutils literal"><span class="pre">keytab_file</span></code> is omitted, that means to use default keytab file.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">(</span><span class="n">using_keytab</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<p><code class="docutils literal notranslate"><span class="pre">principal</span></code> must be specified when initialize with keytab. In this example,
+<code class="docutils literal notranslate"><span class="pre">keytab_file</span></code> is omitted, that means to use default keytab file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">krbContext</span><span class="p">(</span><span class="n">using_keytab</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">principal</span><span class="o">=</span><span class="s1">&#39;HTTP/localhost@EXAMPLE.COM&#39;</span><span class="p">,</span>
                 <span class="n">keytab_file</span><span class="o">=</span><span class="s1">&#39;/etc/httpd/conf/httpd.keytab&#39;</span><span class="p">,</span>
                 <span class="n">ccache_file</span><span class="o">=</span><span class="s1">&#39;/tmp/krb5cc_pid_appname&#39;</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
-<p>Alternatively, following example shows to ask <code class="docutils literal"><span class="pre">krbContext</span></code> to initialize a
+<p>Alternatively, following example shows to ask <code class="docutils literal notranslate"><span class="pre">krbContext</span></code> to initialize a
 given credential cache file from specified keytab file. This is a general use
-case in a service that calls a third-party service&#8217;s API, which needs to be
+case in a service that calls a third-party service’s API, which needs to be
 authenticated by Kerberos GSSAPI mechanism.</p>
 </div>
 </div>
 <div class="section" id="backward-compatibility">
 <h2>Backward Compatibility<a class="headerlink" href="#backward-compatibility" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">krbcontext</span></code> is deprecated and will be removed in future version. New code
-should use <code class="docutils literal"><span class="pre">krbContext</span></code> instead.</p>
+<p><code class="docutils literal notranslate"><span class="pre">krbcontext</span></code> is deprecated and will be removed in future version. New code
+should use <code class="docutils literal notranslate"><span class="pre">krbContext</span></code> instead.</p>
 </div>
 </div>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="api.html" class="btn btn-neutral float-right" title="API" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to krbcontext’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to krbcontext’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -258,11 +279,11 @@ should use <code class="docutils literal"><span class="pre">krbContext</span></c
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Chenxiong Qi.
+        &copy; Copyright 2017, Chenxiong Qi
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -275,35 +296,15 @@ should use <code class="docutils literal"><span class="pre">krbContext</span></c
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'0.7',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

@@ -8,47 +8,44 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Release Notes &mdash; krbcontext 0.7 documentation</title>
+  <title>Release Notes &mdash; krbcontext 0.10 documentation</title>
   
 
   
   
+  
+  
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="krbcontext 0.7 documentation" href="index.html"/>
-        <link rel="prev" title="API" href="api.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="API" href="api.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -62,7 +59,7 @@
             
             
               <div class="version">
-                0.7
+                0.10
               </div>
             
           
@@ -83,14 +80,20 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Using krbcontext</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.7 (2017-08-30)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.6 (2017-08-27)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">0.5 (2017-08-27)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">0.4 (2017-08-26)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.10 (2019-07-15)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">0.9 (2019-06-20)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">0.8 (2017-09-05)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">0.7 (2017-08-30)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">0.6 (2017-08-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">0.5 (2017-08-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">0.4 (2017-08-26)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#legacy">0.3.3 (legacy)</a></li>
 </ul>
 </li>
@@ -105,34 +108,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">krbcontext</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">krbcontext</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Release Notes</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Release Notes</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/release-notes.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -141,45 +164,66 @@
   <div class="section" id="release-notes">
 <h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2>0.7 (2017-08-30)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>Enhance scripts for making new release, publishing packages to PyPI, and
-building RPMs in Fedora Copr.</p>
-<p>Fix a bug in <code class="docutils literal"><span class="pre">init_with_keytab</span></code> that is <code class="docutils literal"><span class="pre">client_keytab</span></code> is not used
-correctly. And also fix tests to use <code class="docutils literal"><span class="pre">assert_has_calls</span></code> correctly.</p>
+<h2>0.10 (2019-07-15)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>A bugfix release, refer to <a class="reference external" href="https://github.com/krbcontext/python-krbcontext/pull/28">PR#28</a>. Thanks Michael Simacek.</p>
 </div>
 <div class="section" id="id2">
-<h2>0.6 (2017-08-27)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>This is a quick and small release after version <code class="docutils literal"><span class="pre">0.5</span></code> by fixing a bug of
-reading package distribution metadata.</p>
-</div>
-<div class="section" id="id3">
-<h2>0.5 (2017-08-27)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>Add new target <code class="docutils literal"><span class="pre">distcheck</span></code> into <code class="docutils literal"><span class="pre">Makefile</span></code>. This is used for checking
-whether there is any problems that would block making a new release.</p>
-<p>Add script to make it super easy to prepare a new release, just run <code class="docutils literal"><span class="pre">make</span>
-<span class="pre">release</span></code> and all artifacts will be created properly and placed in a dedicated
-directory named <code class="docutils literal"><span class="pre">release</span></code> at the root directory of project.</p>
+<h2>0.9 (2019-06-20)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>A major bug <a class="reference external" href="https://github.com/krbcontext/python-krbcontext/issues/23">#23</a> is fixed by Michael Simacek.</p>
+<p><code class="docutils literal notranslate"><span class="pre">py34</span></code> and <code class="docutils literal notranslate"><span class="pre">py35</span></code> are removed from tox testenv, meanwhile <code class="docutils literal notranslate"><span class="pre">py37</span></code> is
+added.</p>
+<p>There are massive fixes to helper scripts under directory <code class="docutils literal notranslate"><span class="pre">scripts/</span></code>.</p>
 </div>
 <div class="section" id="id4">
-<h2>0.4 (2017-08-26)<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>Migrate to <code class="docutils literal"><span class="pre">python-gssapi</span></code>. <code class="docutils literal"><span class="pre">python-krbV</span></code> is no longer used.</p>
-<p><code class="docutils literal"><span class="pre">krbcontext</span></code> is compatible with Python 3.</p>
+<h2>0.8 (2017-09-05)<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>SPEC file passes package review in Fedora and <code class="docutils literal notranslate"><span class="pre">python-krbcontext</span></code> is now a
+new Fedora package. SPEC file is updated according to review feedback from
+Fedora packager. From this update, <code class="docutils literal notranslate"><span class="pre">python-krbcontext</span></code> RPMs will be built for
+current supported Fedora releases as well as <code class="docutils literal notranslate"><span class="pre">epel7</span></code>.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">__future__.absolute_import</span></code> in <code class="docutils literal notranslate"><span class="pre">krbcontext.__init__</span></code>.</p>
+<p>New script for publishing documentation.</p>
+</div>
+<div class="section" id="id5">
+<h2>0.7 (2017-08-30)<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>Enhance scripts for making new release, publishing packages to PyPI, and
+building RPMs in Fedora Copr.</p>
+<p>Fix a bug in <code class="docutils literal notranslate"><span class="pre">init_with_keytab</span></code> that is <code class="docutils literal notranslate"><span class="pre">client_keytab</span></code> is not used
+correctly. And also fix tests to use <code class="docutils literal notranslate"><span class="pre">assert_has_calls</span></code> correctly.</p>
+</div>
+<div class="section" id="id6">
+<h2>0.6 (2017-08-27)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>This is a quick and small release after version <code class="docutils literal notranslate"><span class="pre">0.5</span></code> by fixing a bug of
+reading package distribution metadata.</p>
+</div>
+<div class="section" id="id7">
+<h2>0.5 (2017-08-27)<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>Add new target <code class="docutils literal notranslate"><span class="pre">distcheck</span></code> into <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>. This is used for checking
+whether there is any problems that would block making a new release.</p>
+<p>Add script to make it super easy to prepare a new release, just run <code class="docutils literal notranslate"><span class="pre">make</span>
+<span class="pre">release</span></code> and all artifacts will be created properly and placed in a dedicated
+directory named <code class="docutils literal notranslate"><span class="pre">release</span></code> at the root directory of project.</p>
+</div>
+<div class="section" id="id8">
+<h2>0.4 (2017-08-26)<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>Migrate to <code class="docutils literal notranslate"><span class="pre">python-gssapi</span></code>. <code class="docutils literal notranslate"><span class="pre">python-krbV</span></code> is no longer used.</p>
+<p><code class="docutils literal notranslate"><span class="pre">krbcontext</span></code> is compatible with Python 3.</p>
 </div>
 <div class="section" id="legacy">
 <h2>0.3.3 (legacy)<a class="headerlink" href="#legacy" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">0.3.3</span></code> is a legacy version, any new programs should use versions <code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">0.3.3</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">0.3.3</span></code> is a legacy version, any new programs should use versions <code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">0.3.3</span></code>.</p>
 </div>
 </div>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="api.html" class="btn btn-neutral" title="API" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-left" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -188,11 +232,11 @@ directory named <code class="docutils literal"><span class="pre">release</span><
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Chenxiong Qi.
+        &copy; Copyright 2017, Chenxiong Qi
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -205,35 +249,15 @@ directory named <code class="docutils literal"><span class="pre">release</span><
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'0.7',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>
